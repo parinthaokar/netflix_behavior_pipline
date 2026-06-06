@@ -1,34 +1,35 @@
+Here is a beautifully formatted, production-ready version of your `README.md`. It fixes the text alignment issues in your architecture chart, adds clean typography, utilizes tables for clear configuration, and uses distinct code blocks so you can simply copy and paste it directly into your GitHub repository!
+
 ```markdown
-# End-to-End Netflix Data Pipeline (ELT)
+# 🎬 End-to-End Netflix Data Pipeline (ELT)
 ### Automated Orchestration with Astro Airflow, Snowflake, and dbt Core (Cosmos)
 
+---
+
 ## 📌 Project Overview
-This project implements a modern, automated ELT (Extract, Load, Transform) data pipeline that processes simulated Netflix user behavior data. The pipeline orchestrates the ingestion of raw data from AWS S3, loads it securely into a Snowflake Cloud Data Warehouse, and dynamically triggers modular dbt (Data Build Tool) models using Astronomer Cosmos to build staging and production-ready analytics marts.
+This project implements a modern, automated ELT (Extract, Load, Transform) data pipeline that processes simulated Netflix user behavior data. The pipeline orchestrates the ingestion of raw data from **AWS S3**, loads it securely into a **Snowflake Cloud Data Warehouse**, and dynamically triggers modular **dbt Core** models using **Astronomer Cosmos** to build staging and production-ready analytics marts.
 
 ---
 
-## 🖼️ Architecture & Data Flow Diagram
-<p align="center">
-  <img src="data_flow.png" alt="Netflix Data Pipeline Architecture and Flow Diagram" width="900">
-</p>
+## 🏗️ Technical Architecture & Data Flow
 
----
-
-## 🏗️ Technical Architecture
 ```text
-    [ AWS S3 ]
-        │
-        ▼ (Raw Data Ingestion)
-[ Snowflake (RAW_DATA) ] 🚀 Managed by Airflow SQLExecuteQueryOperator
-        │
-        ▼ (Dynamic Transformation Layers)
-[ dbt Core / Cosmos ] 🧠 Models executed natively as Airflow tasks
-   ├── Staging Layer (`stg_user_subscription_info`, etc.)
-   └── Analytics Marts (`mart_subscription_revenue`, `mart_genre_engagement`)
+       [ AWS S3 Bucket ]
+               │
+               ▼ (Raw Data Ingestion via COPY INTO)
+   [ Snowflake (RAW_DATA Schema) ] 
+               │
+               ▼ 🚀 Managed by Airflow SQLExecuteQueryOperator
+   [ dbt Core / Cosmos Task Group ] 🧠 Models executed natively as Airflow tasks
+               │
+               ├──► Staging Layer (stg_user_subscription_info)
+               └──► Analytics Marts (mart_subscription_revenue, mart_genre_engagement)
 
 ```
 
-* **Orchestration:** Astronomer Astro CLI (Apache Airflow) running inside isolated Docker containers.
+### Key Components:
+
+* **Orchestration:** [Astronomer Astro CLI](https://docs.astronomer.io/astro/cli/install-cli) (Apache Airflow) running inside isolated Docker containers.
 * **Storage & Compute:** Snowflake Cloud Data Warehouse.
 * **Transformations:** dbt Core dynamically parsed into an Airflow Directed Acyclic Graph (DAG) via **Astronomer Cosmos**, eliminating the need to compile manifest files manually.
 
@@ -55,14 +56,14 @@ This project implements a modern, automated ELT (Extract, Load, Transform) data 
 
 ---
 
-## ⚡ DAG Pipeline Visualized
+## ⚡ DAG Pipeline Execution Flow
 
-When triggered, Apache Airflow sequences the pipeline as follows:
+When triggered, Apache Airflow sequences the pipeline natively across your infrastructure:
 
 1. **`copy_s3_to_snowflake`**: Optimally streams data from the cloud storage stage into raw staging tables using Snowflake’s bulk `COPY INTO` command.
-2. **`dbt_transformations` (Task Group)**: Cosmos dynamically builds out individual dbt runs as isolated, native Airflow nodes:
-* Cleanses string metrics and fixes schema anomalies in the `stg_` models.
-* Generates downstream business metrics (Revenue streams, platform engagement logs, content popularity arrays) in the `mart_` models.
+2. **`dbt_transformations` (Cosmos Task Group)**: Cosmos dynamically builds out individual dbt runs as isolated, native Airflow nodes:
+* **Staging:** Cleanses string metrics and fixes schema anomalies in the `stg_` models.
+* **Marts:** Generates downstream business metrics (Revenue streams, platform engagement logs, content popularity arrays) in the `mart_` models.
 
 
 
@@ -72,9 +73,9 @@ When triggered, Apache Airflow sequences the pipeline as follows:
 
 ### Prerequisites
 
-* Docker Desktop installed and running
-* Astro CLI installed (`brew install astronomer/tap/astro`)
-* Active Snowflake Account
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+* [Astro CLI](https://docs.astronomer.io/astro/cli/install-cli) installed (`brew install astronomer/tap/astro`).
+* Active **Snowflake Account**.
 
 ### 1. Initialize Docker Containers
 
@@ -86,31 +87,33 @@ astro dev start
 
 ```
 
-This initializes the Airflow Web Server, Scheduler, and Metadata Database inside Docker. Access the UI at `http://localhost:8080` (Default Credentials: `admin` / `admin`).
+> 💡 **Note:** This initializes the Airflow Web Server, Scheduler, and Metadata Database inside Docker. Access the UI at `http://localhost:8080` using the default credentials (`admin` / `admin`).
 
 ### 2. Configure Airflow Connections
 
 To safely process pipelines without hardcoding secrets, create a connection inside the Airflow UI (**Admin -> Connections**):
 
-* **Connection ID:** `snowflake_conn`
-* **Connection Type:** `Snowflake`
-* **Account:** `<your_snowflake_account_locator>`
-* **Warehouse:** `COMPUTE_WH`
-* **Database:** `NETFLIX_BEHAVIOR`
-* **Schema:** `RAW_DATA`
-* **Login/Password:** Your Snowflake credentials.
+| Connection Field | Value |
+| --- | --- |
+| **Connection ID** | `snowflake_conn` |
+| **Connection Type** | `Snowflake` |
+| **Account** | `<your_snowflake_account_locator>` |
+| **Warehouse** | `COMPUTE_WH` |
+| **Database** | `NETFLIX_BEHAVIOR` |
+| **Schema** | `RAW_DATA` |
+| **Login / Password** | *Your Snowflake credentials* |
 
 ### 3. Run Pipeline Execution
 
-Unpause the `s3_to_snowflake_pipeline` DAG in the UI and click **Trigger DAG**. Monitor the live end-to-end telemetry graph until all steps resolve in green status tags.
+Unpause the `s3_to_snowflake_pipeline` DAG in the Airflow UI and click **Trigger DAG**. Monitor the live end-to-end telemetry graph until all tasks resolve in green success states.
 
 ---
 
 ## 📈 Core Data Mart Analytics Delivered
 
-* **Subscription Revenue Tracking:** Financial reporting summarizing aggregate platform yields based on user demographic tiers.
-* **Genre Engagement Analytics:** Aggregated viewing metrics determining peak performance periods across target genres.
-* **Device Behavior Profiles:** Performance benchmarking cross-referencing watch durations against hardware distributions.
+* **💰 Subscription Revenue Tracking:** Financial reporting summarizing aggregate platform yields based on user demographic tiers.
+* **📊 Genre Engagement Analytics:** Aggregated viewing metrics determining peak performance periods across target genres.
+* **📱 Device Behavior Profiles:** Performance benchmarking cross-referencing watch durations against hardware distributions.
 
 ```
 
