@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: olist_raw
+    database: NETFLIX_BEHAVIOR
+    schema: RAW_DATA
+    tables:
+      - name: USER_WATCHING_BEHAVIOR
