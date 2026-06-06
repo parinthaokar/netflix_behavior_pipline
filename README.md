@@ -1,6 +1,4 @@
-Here is a beautifully formatted, production-ready version of your `README.md`. It fixes the text alignment issues in your architecture chart, adds clean typography, utilizes tables for clear configuration, and uses distinct code blocks so you can simply copy and paste it directly into your GitHub repository!
 
-```markdown
 # 🎬 End-to-End Netflix Data Pipeline (ELT)
 ### Automated Orchestration with Astro Airflow, Snowflake, and dbt Core (Cosmos)
 
@@ -25,7 +23,7 @@ This project implements a modern, automated ELT (Extract, Load, Transform) data 
                ├──► Staging Layer (stg_user_subscription_info)
                └──► Analytics Marts (mart_subscription_revenue, mart_genre_engagement)
 
-```
+
 
 ### Key Components:
 
