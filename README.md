@@ -113,6 +113,3 @@ Unpause the `s3_to_snowflake_pipeline` DAG in the Airflow UI and click **Trigger
 * **📊 Genre Engagement Analytics:** Aggregated viewing metrics determining peak performance periods across target genres.
 * **📱 Device Behavior Profiles:** Performance benchmarking cross-referencing watch durations against hardware distributions.
 
-```
-
-```
