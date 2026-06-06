@@ -1,24 +1,25 @@
-
 # 🎬 End-to-End Netflix Data Pipeline (ELT)
 ### Automated Orchestration with Astro Airflow, Snowflake, and dbt Core (Cosmos)
 
 ---
 
 ## 📌 Project Overview
-This project implements a modern, automated ELT (Extract, Load, Transform) data pipeline that processes simulated Netflix user behavior data. The pipeline orchestrates the ingestion of raw data from **AWS S3**, loads it securely into a **Snowflake Cloud Data Warehouse**, and dynamically triggers modular **dbt Core** models using **Astronomer Cosmos** to build staging and production-ready analytics marts.
+This project implements a modern, automated ELT (Extract, Load, Transform) data pipeline designed to process simulated Netflix user behavior data. 
+
+The pipeline orchestrates the ingestion of raw data from an **AWS S3 Bucket**, loads it securely into a **Snowflake Cloud Data Warehouse**, and dynamically triggers modular **dbt Core** models using **Astronomer Cosmos** to build clean staging views and production-ready analytics marts.
 
 ---
 
 ## 🏗️ Technical Architecture & Data Flow
 
-`
+```text
        [ AWS S3 Bucket ]
                │
                ▼ (Raw Data Ingestion via COPY INTO)
-   [ Snowflake (RAW_DATA Schema) ] 
+     [ Snowflake (RAW_DATA Schema) ]
                │
                ▼ 🚀 Managed by Airflow SQLExecuteQueryOperator
-   [ dbt Core / Cosmos Task Group ] 🧠 Models executed natively as Airflow tasks
+     [ dbt Core / Cosmos Task Group ] 🧠 Models executed natively as Airflow tasks
                │
                ├──► Staging Layer (stg_user_subscription_info)
                └──► Analytics Marts (mart_subscription_revenue, mart_genre_engagement)
@@ -31,8 +32,7 @@ This project implements a modern, automated ELT (Extract, Load, Transform) data 
 * **Storage & Compute:** Snowflake Cloud Data Warehouse.
 * **Transformations:** dbt Core dynamically parsed into an Airflow Directed Acyclic Graph (DAG) via **Astronomer Cosmos**, eliminating the need to compile manifest files manually.
 
----
-
+---text
 ## 📂 Repository Structure
 
 
