@@ -11,7 +11,7 @@ This project implements a modern, automated ELT (Extract, Load, Transform) data 
 
 ## 🏗️ Technical Architecture & Data Flow
 
-```text
+`
        [ AWS S3 Bucket ]
                │
                ▼ (Raw Data Ingestion via COPY INTO)
@@ -35,7 +35,7 @@ This project implements a modern, automated ELT (Extract, Load, Transform) data 
 
 ## 📂 Repository Structure
 
-```text
+
 .
 ├── my-airflow-project/              # Main Airflow Environment
 │   ├── dags/
