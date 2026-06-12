@@ -4,6 +4,8 @@
 ---
 
 ## 📌 Project Overview
+Streaming platforms live and die by content decisions — what to greenlight, what to promote, what to kill. But when those decisions are made on 24-hour-old data manually pulled by analysts, the business is always reacting, never anticipating. This pipeline eliminates that lag.
+
 This project implements a modern, automated ELT (Extract, Load, Transform) data pipeline designed to process simulated Netflix user behavior data. 
 
 The pipeline orchestrates the ingestion of raw data from an **AWS S3 Bucket**, loads it securely into a **Snowflake Cloud Data Warehouse**, and dynamically triggers modular **dbt Core** models using **Astronomer Cosmos** to build clean staging views and production-ready analytics marts.
